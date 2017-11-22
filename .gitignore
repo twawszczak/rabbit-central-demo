@@ -1,0 +1,19 @@
+# ts-node artifacts
+ts-node-*
+
+# NPM
+/node_modules/
+/npm-debug.log
+/package-lock.json
+
+# Cache
+/.cache/
+
+# Editors
+.idea/
+.vscode/
+*.iml
+
+# Mac
+.DS_Store
+

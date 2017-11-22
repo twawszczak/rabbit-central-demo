@@ -1,0 +1,31 @@
+{
+  "name": "rabbit-central-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twawszczak/rabbit-central-demo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/twawszczak/rabbit-central-demo/issues"
+  },
+  "homepage": "https://github.com/twawszczak/rabbit-central-demo#readme",
+  "dependencies": {
+    "amqplib": "^0.5.2",
+    "amqplib-as-promised": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.53",
+    "@types/amqplib": "^0.5.4",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.6.1",
+    "tslint": "^5.8.0",
+    "tslint-config-standard": "^7.0.0"
+  }
+}
