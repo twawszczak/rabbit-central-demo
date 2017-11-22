@@ -4,6 +4,7 @@ import { IPubSubParticipantOptions, PubsSbParticipant } from './pub-sub-particip
 
 export interface ISubscriberOptions extends IPubSubParticipantOptions {
   subscriberId: string
+  expireAfter?: number
 }
 
 export class Subscriber extends PubsSbParticipant {
@@ -17,12 +18,20 @@ export class Subscriber extends PubsSbParticipant {
 
   public async init () {
     await super.init()
-    await this.channel.assertQueue(this.queueName, { autoDelete: true })
+    await this.channel.assertQueue(this.queueName, { expires: (this.options.expireAfter || 10) * 1000 /* 10 s. */ })
     await this.channel.bindQueue(this.queueName, this.options.exchangeName, '')
   }
 
-  public async subscribe (handler: (message: Amqplib.Message | null) => any) {
-    this.consumerTag = (await this.channel.consume(this.queueName, handler)).consumerTag
+  public async subscribe (handler: (message: Amqplib.Message) => Promise<boolean>) {
+    this.consumerTag = (await this.channel.consume(this.queueName, async (message: Amqplib.Message | null) => {
+      if (message) {
+        const ack: boolean = await handler(message)
+        if (ack) {
+          this.channel.ack(message)
+        }
+      }
+
+    })).consumerTag
   }
 
   public getId () {
